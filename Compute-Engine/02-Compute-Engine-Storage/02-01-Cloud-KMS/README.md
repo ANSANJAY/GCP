@@ -416,7 +416,3 @@ gcloud kms keys versions destroy 1 \
 
 ```
 
-Let me know when you’re ready to proceed to the next section on **Compute Engine Disks with CMEK integration**!
-```
-
-
