@@ -338,7 +338,7 @@ gcloud compute disks delete my-zonal-pd \
 * [Performance Guide](https://cloud.google.com/compute/docs/disks/performance)
 * [Hyperdisks Overview](https://cloud.google.com/compute/docs/disks/hyperdisk-overview)
 
-```
+
 
 ---
 ## Title: Google Cloud Compute Engine Persistent Disks
@@ -487,7 +487,7 @@ gcloud compute disks delete my-zonal-pd \
 * [Performance Guide](https://cloud.google.com/compute/docs/disks/performance)
 * [Hyperdisk Overview](https://cloud.google.com/compute/docs/disks/hyperdisk-overview)
 
-```
+
 ---
 ## title: Google Cloud Compute Engine - Persistent Disk (Data Disk) Attachment
 ## description: Learn how to create a zonal data disk, encrypt it with CMEK, attach it to a VM, and prepare it for use.
@@ -616,7 +616,7 @@ gcloud compute instances attach-disk demo7-vm \
 * [Attach a Disk to VM](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
 * [gcloud disk commands](https://cloud.google.com/sdk/gcloud/reference/compute/disks/)
 
-```
+
 
 ---
 ## Title: Mount and Persist a Data Disk on Google Cloud Compute Engine
@@ -790,7 +790,7 @@ cat /mnt/disks/my-app-1/new-disk.txt
 * [fstab Manual](https://man7.org/linux/man-pages/man5/fstab.5.html)
 * [Cloud KMS Integration with Disks](https://cloud.google.com/compute/docs/disks/customer-managed-encryption)
 
-```
+
 
 ---
 ## Title: Resize Boot and Data Disks in Google Cloud Compute Engine
@@ -945,10 +945,6 @@ gcloud compute disks delete my-disk-1 --zone=us-central1-a
 * [Resize Boot Disks](https://cloud.google.com/compute/docs/disks/resize-persistent-disk#resize_boot)
 * [Manual File System Expansion](https://cloud.google.com/compute/docs/disks/add-persistent-disk#formatting)
 
-```
-Here's a structured `README.md` for your **Regional Persistent Disk Demo** in Google Cloud Compute Engine:
-
-````md
 ---
 ## Title: Regional Persistent Disk - GCP Compute Engine Demo
 ## Description: Step-by-step guide to creating and attaching a regional persistent disk in read-only mode to multiple VMs.
@@ -1054,7 +1050,6 @@ gcloud compute disks delete regional-disk-1 \
 * [Attaching Disks in Read-Only Mode](https://cloud.google.com/compute/docs/disks/multiple-read-only)
 * [Persistent Disk Types and Performance](https://cloud.google.com/compute/docs/disks/performance)
 
-```
 
 
 
