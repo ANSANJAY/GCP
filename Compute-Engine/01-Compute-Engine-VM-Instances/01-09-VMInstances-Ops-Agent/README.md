@@ -89,8 +89,8 @@ sudo bash add-google-cloud-ops-agent-repo.sh --uninstall
   - demo2-opsagent
  
 ---
-## title: Google Cloud Compute Engine – Ops Agent Overview
-## description: Understand what Ops Agent is, why it replaces legacy agents, and how it enhances observability on GCP VM instances for logging and monitoring.
+## Title: Google Cloud Compute Engine – Ops Agent Overview
+## Description: Understand what Ops Agent is, why it replaces legacy agents, and how it enhances observability on GCP VM instances for logging and monitoring.
 ---
 
 ## ✅ Step-by-Step Summary
