@@ -193,3 +193,155 @@ gcloud compute disks list
 ## Additional Reference
 - [Add Persistent Disk](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
 - [Format and Mount Disk](https://cloud.google.com/compute/docs/disks/format-mount-disk-linux)
+
+---
+Here's the full **README format** documentation based on the persistent disk demo and lecture content:
+
+````md
+---
+## Title: Google Cloud Persistent Disks (Zonal & Regional)
+## Description: Learn the types, performance, lifecycle, and creation methods for Persistent Disks in GCP Compute Engine.
+---
+
+## ✅ Step-by-Step Summary
+
+### 🔹 Types of Persistent Disks
+
+| Type                  | Description                                  | Scope         | Use Case                          |
+|-----------------------|----------------------------------------------|---------------|-----------------------------------|
+| Zonal Persistent Disk | Replicated in a **single zone**              | Zonal         | General workloads                 |
+| Regional Persistent Disk | Replicated in **two zones** in same region | Multi-Zonal   | High availability VMs             |
+
+- Persistent Disks are **network-attached block storage**
+- They can be used as both **boot** and **data** disks (except regional disks which are data-only)
+- **Lifecycle is independent** of VM — can be detached/reattached or retained after VM deletion
+- Disks can be **resized (increased)** even when attached or live
+
+---
+
+## 💡 Key Differences: Zonal vs Regional Persistent Disk
+
+| Feature                        | Zonal PD        | Regional PD                |
+|-------------------------------|-----------------|----------------------------|
+| Replication                   | Single zone     | Two zones in one region    |
+| Boot Disk Support             | ✅ Yes          | ❌ No                       |
+| Min Size                      | 10 GB           | 200 GB                     |
+| VM Compatibility              | All types       | E2, N1, N2, N2D only       |
+| From Snapshot Support         | ✅ Yes          | ✅ Yes                      |
+| From Image Support            | ✅ Yes          | ❌ No                       |
+
+---
+
+## 🔁 Real-World Use (with Your Project Experience)
+
+- Used **regional persistent disks** in failover-ready VM clusters for enhanced resilience.
+- Resized disks live during performance spikes without downtime.
+- Created VM templates using PD-balanced boot disks for cost-effective general-purpose compute.
+- Used snapshots to clone production environments for testing safely and quickly.
+
+---
+
+## 📊 Performance Metrics Summary
+
+- **Performance is proportional to**: `Disk Size` + `vCPU Count of the VM`
+- Metrics affected: `Read IOPS`, `Write IOPS`, `Read Throughput`, `Write Throughput`
+
+| Disk Size | vCPU | Read IOPS | Write IOPS | Read MB/s | Write MB/s |
+|-----------|------|-----------|------------|------------|-------------|
+| 500 GB    | 2    | ~375      | ~750       | ~60        | ~60         |
+| 1000 GB   | 4    | Higher     | Higher     | Higher     | Higher      |
+
+- You **cannot shrink** disk size, only increase.
+- Performance scales **automatically**, unlike Hyperdisks which allow explicit tuning.
+
+---
+
+## 💽 Disk Type Comparison
+
+| Disk Type         | Code         | Cost     | Durability | Boot Support | Performance      | Best For                          |
+|-------------------|--------------|----------|------------|--------------|------------------|-----------------------------------|
+| Standard (HDD)    | `pd-standard`| Low      | 99.29%     | ✅ Yes*      | 🟥 Slow           | Cold data, backups, low cost use  |
+| Balanced (SSD)    | `pd-balanced`| Moderate | 99.999%    | ✅ Default   | 🟨 Good           | General workloads (default)       |
+| SSD               | `pd-ssd`     | High     | 99.999%    | ✅           | 🟩 Very Good      | Latency-sensitive apps, DBs       |
+| Extreme SSD       | `pd-extreme` | Very High| 99.9999%   | ✅*          | 🟩🟩 Excellent     | SAP HANA, HPC, write-intensive    |
+| Hyperdisks        | `hyperdisk-*`| Custom   | NA         | ❌           | Custom-defined   | Next-gen workloads (next demo)    |
+
+> \* Bootable only when explicitly configured or allowed.
+
+---
+
+## 🔧 CLI Command Summary
+
+```bash
+# Create Zonal Persistent Disk
+gcloud compute disks create my-zonal-pd \
+  --size=100GB \
+  --type=pd-balanced \
+  --zone=us-central1-a
+
+# Create Regional Persistent Disk
+gcloud compute disks create my-regional-pd \
+  --size=200GB \
+  --type=pd-ssd \
+  --region=us-central1 \
+  --replica-zones=us-central1-a,us-central1-b
+
+# Resize a Persistent Disk
+gcloud compute disks resize my-zonal-pd \
+  --size=200GB \
+  --zone=us-central1-a
+
+# List Persistent Disks
+gcloud compute disks list
+
+# Delete a Disk
+gcloud compute disks delete my-zonal-pd \
+  --zone=us-central1-a
+````
+
+---
+
+## 🎯 Interview Questions + Sample Answers
+
+**Q1: What's the difference between zonal and regional persistent disks?**
+**A:** Zonal PD is stored in a single zone. Regional PD replicates data across two zones for higher availability but cannot be used as a boot disk.
+
+---
+
+**Q2: Can you resize a persistent disk while it’s in use?**
+**A:** Yes, persistent disks can be resized at any time—while attached or detached—and data remains intact.
+
+---
+
+**Q3: Why can’t you decrease the size of a persistent disk?**
+**A:** Reducing size can lead to data corruption. GCP only supports size increases to avoid loss of existing data.
+
+---
+
+**Q4: Which disk type would you use for SAP HANA?**
+**A:** `pd-extreme` is recommended due to its high durability, IOPS, and throughput requirements.
+
+---
+
+## 🧠 Analogy to Remember
+
+💽 **Persistent Disks = Cloud SSDs/HDDs**
+
+* **Zonal PD**: Like keeping your files on one local drive.
+* **Regional PD**: Like using RAID-1 across two separate offices.
+* Resize = Add more storage blocks to your SSD.
+* Cannot shrink = Once you give more space, it's yours forever.
+
+---
+
+## 📚 Additional References
+
+* [Persistent Disks Overview](https://cloud.google.com/compute/docs/disks)
+* [Regional PDs](https://cloud.google.com/compute/docs/disks#regionalpd)
+* [Performance Guide](https://cloud.google.com/compute/docs/disks/performance)
+* [Hyperdisks Overview](https://cloud.google.com/compute/docs/disks/hyperdisk-overview)
+
+```
+
+
+
