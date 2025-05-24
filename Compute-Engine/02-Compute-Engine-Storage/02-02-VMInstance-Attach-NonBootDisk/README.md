@@ -340,12 +340,9 @@ gcloud compute disks delete my-zonal-pd \
 
 ```
 
-Here's the complete **README format** for your Compute Engine Persistent Disk concepts demo:
-
-````md
 ---
-title: Google Cloud Compute Engine Persistent Disks
-description: Learn about zonal and regional persistent disks, disk types, performance behavior, and use cases in GCP Compute Engine.
+## Title: Google Cloud Compute Engine Persistent Disks
+## Description: Learn about zonal and regional persistent disks, disk types, performance behavior, and use cases in GCP Compute Engine.
 ---
 
 ## ✅ Step-by-Step Summary
