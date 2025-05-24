@@ -77,7 +77,7 @@ description: Understand Compute Engine machine families, predefined types, and c
 
 ## 🛠 Real-World Use (with Your Project Experience)
 
-> While building CI/CD runners at AmEx, we used `e2-standard-2` for general-purpose pipelines and later migrated to `n2-highmem` VMs for a database caching layer to handle increased volume.
+> While building CI/CD runners at, we used `e2-standard-2` for general-purpose pipelines and later migrated to `n2-highmem` VMs for a database caching layer to handle increased volume.
 >
 > - For GPU ML workloads, we evaluated `a2-highgpu-1g` during performance tuning experiments.
 > - Where predefined configs didn’t meet our compute-to-memory ratio needs, we used **Custom Machine Types** with 6 vCPUs and 48GB memory to optimize performance and cost.
@@ -138,7 +138,7 @@ gcloud compute instances create custom-vm \
 
 ---
 title: Google Cloud Compute Engine – GPU Concepts
-description: Learn how GPUs are used in Compute Engine for ML, HPC, and 3D workloads, and understand supported machine families, OS images, and host maintenance behavior.
+Description: Learn how GPUs are used in Compute Engine for ML, HPC, and 3D workloads, and understand supported machine families, OS images, and host maintenance behavior.
 ---
 
 ## ✅ Step-by-Step Summary
@@ -174,7 +174,7 @@ description: Learn how GPUs are used in Compute Engine for ML, HPC, and 3D workl
 
 ## 🛠 Real-World Use (with Your Project Experience)
 
-> During a GPU benchmarking project at AmEx for an ML pipeline:
+> During a GPU benchmarking project at  for an ML pipeline:
 >
 > - We created `a2-highgpu-1g` instances with the **Deep Learning VM image** preloaded with CUDA and TensorFlow.
 > - We used **spot VMs** with GPUs to reduce training costs.
