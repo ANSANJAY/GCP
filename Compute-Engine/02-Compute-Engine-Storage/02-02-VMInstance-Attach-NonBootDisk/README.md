@@ -620,12 +620,10 @@ gcloud compute instances attach-disk demo7-vm \
 * [gcloud disk commands](https://cloud.google.com/sdk/gcloud/reference/compute/disks/)
 
 ```
-Here’s the **README** documenting the entire disk mounting and persistence configuration in Google Cloud:
 
-````md
 ---
-title: Mount and Persist a Data Disk on Google Cloud Compute Engine
-description: Learn how to mount a data disk, write files, configure fstab for auto-mount, and verify persistence after VM reboot.
+## Title: Mount and Persist a Data Disk on Google Cloud Compute Engine
+## Description: Learn how to mount a data disk, write files, configure fstab for auto-mount, and verify persistence after VM reboot.
 ---
 
 ## ✅ Step-by-Step Summary
@@ -797,7 +795,6 @@ cat /mnt/disks/my-app-1/new-disk.txt
 
 ```
 
-````md
 ---
 ## Title: Resize Boot and Data Disks in Google Cloud Compute Engine
 ## Description: Learn how to resize boot and non-boot (data) persistent disks, including automatic and manual resizing steps.
