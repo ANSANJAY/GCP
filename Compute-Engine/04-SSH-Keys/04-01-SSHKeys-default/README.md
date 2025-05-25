@@ -72,3 +72,103 @@ gcloud compute ssh --zone "us-central1-a" "vm2" --project "gcplearn9"
 - [Adding or Removing SSH keys](https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys)
 - [SSH OS Login](https://cloud.google.com/compute/docs/oslogin)
 - [Managing Instance Access](https://cloud.google.com/compute/docs/instances/managing-instance-access)
+
+
+# 🔐 SSH Authentication for Linux VMs in Google Compute Engine (GCE)
+
+In Google Cloud, **Linux VM instances** use **key-based SSH authentication**. This document explains the different methods for managing SSH access and the scenarios in which each applies.
+
+---
+
+## ✅ Key Concepts
+
+- **Linux VMs**: Use SSH key-based authentication.
+- **Windows VMs**: Use username + password authentication.
+- **SSH Access Options**:
+  - Web SSH Console
+  - Cloud Shell with `gcloud compute ssh`
+  - Local Terminal with `gcloud` CLI
+  - Third-party tools (e.g., PuTTY, native `ssh` command)
+
+---
+
+## 🔧 SSH Management Options
+
+| Method                 | Description                                                                 | Use Case                                      |
+|------------------------|-----------------------------------------------------------------------------|-----------------------------------------------|
+| Metadata-based SSH     | Keys are stored in instance or project metadata.                            | Flexible manual key management.               |
+| OS Login               | Keys are stored in user account via IAM + metadata (`enable-oslogin`).      | Centralized IAM-based access control.         |
+| Manually-generated SSH | Custom SSH key pairs (used with native SSH or tools like PuTTY).            | Required for third-party tools and scripts.   |
+
+---
+
+## 📌 Metadata-based SSH Keys
+
+- Can be set **project-wide** or **instance-specific**.
+- Supports:
+  - Manual key creation (`ssh-keygen`)
+  - Auto-generated keys by GCP
+- Stored in:
+  - Project Metadata: affects all VM instances in the project.
+  - Instance Metadata: affects only the specific VM.
+
+---
+
+## 📌 OS Login
+
+- Tightly integrated with **IAM roles** and **Cloud Identity**.
+- Enabled via metadata key:
+  ```text
+  enable-oslogin = TRUE
+````
+
+* Benefits:
+
+  * Centralized access management via IAM.
+  * Easier key rotation and auditing.
+  * Secure and scalable for organizations.
+
+---
+
+## 📎 Manual SSH Key Management
+
+* Useful for non-GCP-native tools (e.g., PuTTY, local `ssh` command).
+* Steps:
+
+  1. Generate key pair: `ssh-keygen -t rsa`
+  2. Add the **public key** to metadata.
+  3. Use the **private key** to connect via:
+
+     ```bash
+     ssh -i ~/.ssh/id_rsa <USER>@<VM_EXTERNAL_IP>
+     ```
+
+---
+
+## 🧪 Upcoming Demos
+
+| Demo No. | Title                                                             |
+| -------- | ----------------------------------------------------------------- |
+| 1️⃣      | Create SSH keys manually and add them via instance metadata       |
+| 2️⃣      | Add project-wide SSH keys using project metadata                  |
+| 3️⃣      | Enable and use OS Login with IAM roles                            |
+| 4️⃣      | Use custom SSH keys with third-party tools (e.g., PuTTY)          |
+| 5️⃣      | Combine OS Login with SSH key enforcement for enterprise security |
+
+---
+
+## 🧠 Recommendation
+
+* ✅ Use **OS Login** for centralized IAM-based access management.
+* ⚠️ Use **Metadata-based keys** only if your use case requires finer-grained per-instance control or backward compatibility.
+* 🛠 Use **manual SSH key generation** for external clients or tools.
+
+---
+
+## 🔗 References
+
+* [GCP OS Login Documentation](https://cloud.google.com/compute/docs/oslogin)
+* [Managing SSH Access in GCE](https://cloud.google.com/compute/docs/instances/connecting-to-instance)
+
+```
+
