@@ -171,5 +171,5 @@ In Google Cloud, **Linux VM instances** use **key-based SSH authentication**. Th
 * [GCP OS Login Documentation](https://cloud.google.com/compute/docs/oslogin)
 * [Managing SSH Access in GCE](https://cloud.google.com/compute/docs/instances/connecting-to-instance)
 
-```
+
 
