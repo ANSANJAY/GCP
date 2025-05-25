@@ -232,3 +232,114 @@ gcloud compute addresses delete sip-lb-umig \
 
 ## References 
 - [Instance Groups](https://cloud.google.com/compute/docs/instance-groups)
+
+
+---
+
+Here’s a structured `README.md` documenting the **Health Check & Firewall Rule Setup** for your unmanaged instance group load balancer demo:
+
+````md
+# 🛡️ Health Check and Firewall Rule Setup for Load Balancer
+
+This section documents the setup of **Health Checks** and **Firewall Rules** required for a Load Balancer to work with an **Unmanaged Instance Group (UIG)** in Google Cloud.
+
+---
+
+## 📍 Objective
+
+Ensure only **healthy VM instances** serve traffic through the load balancer by:
+- Creating a **health check** to validate service availability.
+- Creating a **firewall rule** to allow health check probes.
+
+---
+
+## ✅ What is a Health Check?
+
+A health check verifies if a VM instance is ready to receive user traffic. It sends periodic requests (e.g., HTTP GET `/index.html`) and waits for a healthy HTTP response (e.g., 200 OK with a keyword in the body).
+
+### 🔍 Instance Health Logic:
+- **Healthy**: Consecutive successful responses
+- **Unhealthy**: Consecutive failed responses or timeouts
+
+---
+
+## ⚙️ Create Regional HTTP Health Check
+
+### Option 1: Using Console
+- Navigate to: **Compute Engine > Health checks**
+- Click **Create Health Check**
+  - **Name**: `app1-health-check`
+  - **Scope**: Regional
+  - **Protocol**: HTTP
+  - **Port**: `80`
+  - **Request Path**: `/index.html`
+  - **Response Content Match**: `Welcome`
+  - **Check Interval**: `5 seconds`
+  - **Timeout**: `5 seconds`
+  - **Healthy Threshold**: `2`
+  - **Unhealthy Threshold**: `2`
+
+### Option 2: Using gcloud CLI
+```bash
+gcloud compute health-checks create http app1-health-check \
+  --port=80 \
+  --request-path="/index.html" \
+  --check-interval=5s \
+  --timeout=5s \
+  --unhealthy-threshold=2 \
+  --healthy-threshold=2 \
+  --response="Welcome" \
+  --region=us-central1 \
+  --no-enable-logging
+````
+
+---
+
+## 🔥 Create Firewall Rule for Health Check Probes
+
+Health checks come from Google's IP ranges and must be allowed through your firewall to reach your VM instances.
+
+### Allowed IP Ranges:
+
+* `130.211.0.0/22`
+* `35.191.0.0/16`
+
+### gcloud Command:
+
+```bash
+gcloud compute firewall-rules create allow-health-check \
+  --network=default \
+  --direction=INGRESS \
+  --action=ALLOW \
+  --rules=tcp:80 \
+  --source-ranges=130.211.0.0/22,35.191.0.0/16 \
+  --target-tags=app-server
+```
+
+### Notes:
+
+* Replace `--network=default` if you're using a custom VPC.
+* Use `--target-tags` if your VMs are tagged (e.g., `app-server`).
+* You can verify this rule under: **VPC > Firewall Rules**
+
+---
+
+## 📦 What’s Next?
+
+→ Proceed to the next step:
+**Creating the External HTTP Load Balancer** and testing it using the VMs in the unmanaged instance group.
+
+---
+
+## 🧠 Summary
+
+| Resource      | Purpose                                    |
+| ------------- | ------------------------------------------ |
+| Health Check  | Determines which VMs are healthy           |
+| Firewall Rule | Allows health check probes from Google IPs |
+| HTTP Protocol | Path `/index.html`, expecting "Welcome"    |
+| Region Scope  | Health check and resources are regional    |
+
+```
+
+
