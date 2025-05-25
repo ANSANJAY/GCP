@@ -152,4 +152,118 @@ gcloud compute instances list --filter='name:demo9-vm-localssd'
 
 ## Step-08: Persistent Disk vs Local SSD
 - Understand more about Persistent Disk vs Local SSD
-- Refer presentation slides for the same. 
+- Refer presentation slides for the same.
+---
+
+
+# 🚀 Google Cloud Compute Engine: Local SSD Overview
+
+Local SSDs in Google Cloud provide **high-performance, low-latency storage** physically attached to the **host server** of your VM instance. They are ephemeral, optimized for temporary and high-throughput use cases.
+
+---
+
+## 📌 What is a Local SSD?
+
+- **Physically attached** to the **host server** where the VM resides.
+- Offers **very high IOPS** and **low latency**, significantly outperforming persistent disks.
+- **Data is lost** when the VM is stopped, deleted, or terminated (ephemeral).
+- Ideal for **temporary storage needs** such as caching or scratch data.
+
+---
+
+## 🔐 Encryption Support
+
+| Feature | Supported on Persistent Disks | Supported on Local SSD |
+|--------|-------------------------------|------------------------|
+| Google Managed Encryption | ✅ | ✅ (automatic) |
+| Customer Managed Key (CMEK) | ✅ | ❌ |
+| Customer Supplied Key (CSEK) | ✅ | ❌ |
+
+- **Local SSDs are automatically encrypted** by Compute Engine.
+- **CMEK/CSEK not supported** due to direct hardware-level integration.
+
+---
+
+## 🖥️ Machine Type Compatibility
+
+- **Only specific machine types support local SSDs.**
+- Use GCP documentation to verify support for **NVMe or SCSI (Multi-Queue)** interfaces:
+  - [Local SSD Compatibility](https://cloud.google.com/compute/docs/disks/local-ssd#machine_types)
+
+---
+
+## ⚙️ Interface & Performance
+
+| Interface | Notes |
+|-----------|-------|
+| **NVMe** | Recommended for modern Linux kernels; best performance |
+| **SCSI (Multi-Queue)** | Use for legacy or specific kernel compatibility |
+
+- **10x to 100x** performance increase over persistent disks.
+- Best used with **NVMe-enabled images** or **multi-queue SCSI** images.
+
+---
+
+## 🔄 Lifecycle & Behavior
+
+| Feature | Persistent Disk | Local SSD |
+|---------|------------------|-----------|
+| Lifecycle | Independent of VM | Tied to VM lifecycle |
+| Snapshots | ✅ Supported | ❌ Not supported |
+| Attach/Detach | ✅ Yes | ❌ No – one-time binding |
+| Reuse across VMs | ✅ Yes | ❌ No |
+
+---
+
+## 🛡️ Durability & Availability
+
+- **Persistent Disk**: High durability, availability, and flexibility.
+- **Local SSD**: Lower durability and availability.
+  - **Data is not persistent** and is lost on VM stop/delete.
+  - **Enable live migration** to preserve data across host maintenance.
+
+---
+
+## 📚 Use Cases
+
+| Use Case | Why Local SSD? |
+|----------|----------------|
+| Caching | Extremely fast read/write for temporary cache data |
+| Temporary high-speed buffer | ETL pipelines, temp scratch space |
+| Data analytics | Low-latency intermediate storage for processing |
+
+---
+
+## 📊 Comparison Summary
+
+| Feature | Persistent Disk | Local SSD |
+|--------|------------------|-----------|
+| Storage Type | Permanent (durable) | Ephemeral (temporary) |
+| Encryption | Google/CMEK/CSEK | Automatic only |
+| Machine Types | All supported | Limited |
+| Performance | Good | 10–100x faster |
+| Snapshot Support | ✅ Yes | ❌ No |
+| Detach/Attach | ✅ Yes | ❌ No |
+| Mount Type | Network drive | Physical host-attached |
+| Use Case | General purpose | Temporary high-performance data |
+
+---
+
+## 🛠️ Next Steps
+
+➡ Proceed to the **implementation demo**, where we:
+- Create a VM with local SSD
+- Format and mount the SSD
+- Measure performance
+- Observe data lifecycle on VM termination
+
+---
+
+## 📖 References
+
+- [GCP Local SSD Documentation](https://cloud.google.com/compute/docs/disks/local-ssd)
+- [Machine Type Support](https://cloud.google.com/compute/docs/disks/local-ssd#machine_types)
+- [NVMe & SCSI Performance Notes](https://cloud.google.com/compute/docs/disks/performance#local_ssd_performance)
+
+```
+
