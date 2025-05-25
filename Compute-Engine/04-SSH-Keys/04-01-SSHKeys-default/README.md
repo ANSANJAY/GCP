@@ -118,7 +118,8 @@ In Google Cloud, **Linux VM instances** use **key-based SSH authentication**. Th
 
 - Tightly integrated with **IAM roles** and **Cloud Identity**.
 - Enabled via metadata key:
-  ```text
+  
+```text
   enable-oslogin = TRUE
 ````
 
